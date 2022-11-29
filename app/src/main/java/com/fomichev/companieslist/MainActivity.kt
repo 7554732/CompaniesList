@@ -3,6 +3,7 @@ package com.fomichev.companieslist
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -10,9 +11,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.fomichev.companieslist.ui.companies.CompaniesListView
+import com.fomichev.companieslist.ui.companies.CompaniesViewModel
 import com.fomichev.companieslist.ui.theme.CompaniesListTheme
 
 class MainActivity : ComponentActivity() {
+
+    val companiesViewModel: CompaniesViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -22,22 +28,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    CompaniesListView(companiesViewModel)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    CompaniesListTheme {
-        Greeting("Android")
     }
 }

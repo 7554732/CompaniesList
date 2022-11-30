@@ -14,7 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.fomichev.companieslist.ui.companies.CompaniesListView
 import com.fomichev.companieslist.ui.companies.CompaniesViewModel
 import com.fomichev.companieslist.ui.theme.CompaniesListTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     val companiesViewModel: CompaniesViewModel by viewModels()

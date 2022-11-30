@@ -1,6 +1,7 @@
 buildscript {
     ext {
         compose_version = '1.4.0-alpha02'
+        room_version = "2.4.3"
     }
 }
 plugins {

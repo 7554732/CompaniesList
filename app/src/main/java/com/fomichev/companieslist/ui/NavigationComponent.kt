@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fomichev.companieslist.ui.companies.CompaniesListView
 import com.fomichev.companieslist.ui.companies.CompaniesViewModel
+import com.fomichev.companieslist.ui.company.CompanyCardView
+import com.fomichev.companieslist.ui.company.CompanyViewModel
 
 @Composable
 fun NavigationComponent(navController: NavHostController) {
@@ -16,7 +18,13 @@ fun NavigationComponent(navController: NavHostController) {
     ) {
         composable("CompaniesList") {
             val companiesViewModel = hiltViewModel<CompaniesViewModel>()
-            CompaniesListView(companiesViewModel)
+            CompaniesListView(companiesViewModel) { id ->
+                navController.navigate("CompanyCard/" + id)
+            }
+        }
+        composable("CompanyCard/{id}") {
+            val companyViewModel = hiltViewModel<CompanyViewModel>()
+            CompanyCardView(companyViewModel)
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.fomichev.companieslist.domain
 
 class CompanyCardModel(
-    val id: String = "xxx",
+    val id: String = "",
     val name: String = "",
     val img: String = "",
     val description: String = "",

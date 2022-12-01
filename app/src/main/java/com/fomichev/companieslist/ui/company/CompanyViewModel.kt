@@ -19,7 +19,6 @@ class CompanyViewModel @Inject constructor(
 
     private var id: String = checkNotNull(savedStateHandle["id"])
 
-
     private var _company = MutableLiveData(CompanyCardModel())
     val company: LiveData<CompanyCardModel>
         get() = _company
@@ -29,7 +28,6 @@ class CompanyViewModel @Inject constructor(
     }
 
     fun getCompany(id: String) {
-        Log.d("getCompany", " " + id)
         viewModelScope.launch {
             _company.value = try {
                 withContext(Dispatchers.IO) {
@@ -39,7 +37,6 @@ class CompanyViewModel @Inject constructor(
                 e.printStackTrace()
                 CompanyCardModel()
             }
-            Log.d("getCompany", " " + (company.value?.id ?: "null"))
         }
     }
 

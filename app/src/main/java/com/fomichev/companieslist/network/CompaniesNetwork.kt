@@ -17,7 +17,7 @@ interface CompaniesApiService {
     @GET("test.php")
     suspend fun getCompany(
         @Query("id") id: String
-    ): CompanyCardModel
+    ): List<CompanyCardModel>
 }
 
 private val moshi = Moshi.Builder()

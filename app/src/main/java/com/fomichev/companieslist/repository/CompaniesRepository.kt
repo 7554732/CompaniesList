@@ -28,6 +28,6 @@ class CompaniesRepository @Inject constructor(
     }
 
     override suspend fun getCompany(id: String): CompanyCardModel {
-        return retrofitService.getCompany(id)
+        return retrofitService.getCompany(id).get(0)
     }
 }

@@ -36,7 +36,11 @@ fun CompanyCard(company: CompanyItemModel, onClick: (id: String) -> Unit) {
         elevation = 2.dp
     ) {
         Column() {
-            Text(text = company.name)
+            Text(
+                text = company.name,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(all = 16.dp)
+            )
         }
     }
 }

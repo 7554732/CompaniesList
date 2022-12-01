@@ -6,7 +6,7 @@ import androidx.compose.runtime.livedata.observeAsState
 
 @Composable
 fun CompanyCardView(viewModel: CompanyViewModel) {
-    val id = viewModel.id.observeAsState()
+    val company = viewModel.company.observeAsState()
 
-    id.value?.let { Text(text  = it) }
+    company.value?.let { Text(text  = it.name) }
 }

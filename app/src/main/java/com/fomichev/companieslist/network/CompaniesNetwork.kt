@@ -1,5 +1,6 @@
 package com.fomichev.companieslist.network
 
+import com.fomichev.companieslist.domain.CompanyCardModel
 import com.fomichev.companieslist.domain.CompanyItemModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -12,6 +13,11 @@ import retrofit2.http.Query
 interface CompaniesApiService {
     @GET("test.php")
     suspend fun getCompanies(): List<CompanyItemModel>
+
+    @GET("test.php")
+    suspend fun getCompany(
+        @Query("id") id: String
+    ): CompanyCardModel
 }
 
 private val moshi = Moshi.Builder()

@@ -1,13 +1,46 @@
 package com.fomichev.companieslist.ui.company
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
+import com.fomichev.companieslist.domain.CompanyCardModel
+import com.fomichev.companieslist.domain.CompanyItemModel
+import com.fomichev.companieslist.repository.CompaniesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CompanyViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+@HiltViewModel
+class CompanyViewModel @Inject constructor(
+    private val repository: CompaniesRepository,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
-    private var _id = MutableLiveData<String>(checkNotNull(savedStateHandle["id"]))
-    val id: LiveData<String>
-        get() = _id
+    private var id: String = checkNotNull(savedStateHandle["id"])
+
+
+    private var _company = MutableLiveData(CompanyCardModel())
+    val company: LiveData<CompanyCardModel>
+        get() = _company
+
+    init {
+        getCompany(id)
+    }
+
+    fun getCompany(id: String) {
+        Log.d("getCompany", " " + id)
+        viewModelScope.launch {
+            _company.value = try {
+                withContext(Dispatchers.IO) {
+                    repository.getCompany(id)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                CompanyCardModel()
+            }
+            Log.d("getCompany", " " + (company.value?.id ?: "null"))
+        }
+    }
+
 }

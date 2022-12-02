@@ -15,12 +15,12 @@ import javax.inject.Inject
 class CompanyViewModel @Inject constructor(
     private val repository: CompaniesRepository,
     savedStateHandle: SavedStateHandle
-) : ViewModel() {
+) : ViewModel(), CompanyViewModelApi {
 
     private var id: String = checkNotNull(savedStateHandle["id"])
 
     private var _company = MutableLiveData(CompanyCardModel())
-    val company: LiveData<CompanyCardModel>
+    override val company: LiveData<CompanyCardModel>
         get() = _company
 
     init {

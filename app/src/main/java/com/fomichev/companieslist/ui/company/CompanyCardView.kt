@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -20,9 +21,11 @@ import com.fomichev.companieslist.R
 import com.fomichev.companieslist.domain.CompanyCardModel
 import com.fomichev.companieslist.domain.CompanyItemModel
 import com.fomichev.companieslist.network.CompaniesNetwork.API_ENDPOINT
+import com.fomichev.companieslist.ui.companies.CompaniesListView
+import com.fomichev.companieslist.ui.companies.FakeCompaniesViewModel
 
 @Composable
-fun CompanyCardView(viewModel: CompanyViewModel) {
+fun CompanyCardView(viewModel: CompanyViewModelApi) {
     val company = viewModel.company.observeAsState()
 
     company.value?.let {
@@ -34,8 +37,8 @@ fun CompanyCardView(viewModel: CompanyViewModel) {
 fun CompanyCard(company: CompanyCardModel, onClick: (id: String) -> Unit = {}) {
     val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier.
-        verticalScroll(scrollState)
+        modifier = Modifier
+            .verticalScroll(scrollState)
             .padding(all = 4.dp)
     ){
         Row{
@@ -50,42 +53,53 @@ fun CompanyCard(company: CompanyCardModel, onClick: (id: String) -> Unit = {}) {
                     contentDescription = null,
                     modifier = Modifier
                         .size(120.dp, 180.dp)
+                        .padding(all = 8.dp)
                 )
             }
-            Text(
-                text  = company.name,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 8.dp)
-            )
+            Column() {
+                Text(
+                    text  = company.name,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = 8.dp)
+                )
+                if(company.lat != "0" && company.lon != "0") {
+                    Row() {
+                        Text(
+                            text = company.lat,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(all = 8.dp)
+                        )
+                        Text(
+                            text = company.lon,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(all = 8.dp)
+                        )
+                    }
+                }
+                Text(
+                    text  = company.www,
+                    color = Color.Blue,
+                    modifier = Modifier.padding(all = 8.dp)
+                )
+                Text(
+                    text  = company.phone,
+                    modifier = Modifier.padding(all = 8.dp)
+                )
+            }
         }
         Text(
             text  = company.description,
             modifier = Modifier.padding(all = 8.dp)
         )
-        Row() {
-            Text(
-                text  = company.lat,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(all = 8.dp)
-            )
-            Text(
-                text  = company.lon,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(all = 8.dp)
-            )
-        }
-        Text(
-            text  = company.www,
-            color = Color.Blue,
-            modifier = Modifier.padding(all = 8.dp)
-        )
-        Text(
-            text  = company.phone,
-            modifier = Modifier.padding(all = 8.dp)
-        )
     }
+}
+
+@Preview(showBackground = true, widthDp = 420)
+@Composable
+fun PreviewCompany() {
+    CompanyCardView(FakeCompanyViewModel())
 }
